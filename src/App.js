@@ -1,5 +1,14 @@
 import React from 'react';
 import './index.scss';
+import React, { useState, useEffect } from "react";
+
+let cats = [
+  { "name": "All" },
+  { "name": "Sea" },
+  { "name": "Mountains" },
+  { "name": "Architecture" },
+  { "name": "Cities" }
+];
 
 function Collection({ name, images }) {
   return (
@@ -15,7 +24,38 @@ function Collection({ name, images }) {
   );
 }
 
+
+
 function App() {
+
+  const [collection, setCollection] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [categoryId, setCategoryId] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const category = categoryId ? `category=${categoryId}` : "";
+
+   useEffect(() => {
+     setIsLoading(true);
+     fetch(
+       `https://6306f7cac0d0f2b801242e89.mockapi.io/photo_collections?page=${page}&limit=3&${category}`
+     )
+       .then((res) => res.json())
+       .then((json) => {
+         setCollection(json);
+       })
+       .catch((err) => {
+         console.warn(err);
+         alert("Error in receiving data");
+       })
+       .finally(() => setIsLoading(false));
+   }, [categoryId, page]);
+
+
+   
+
+
   return (
     <div className="App">
       <h1>My collection of photos</h1>
