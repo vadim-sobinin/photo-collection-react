@@ -23,21 +23,21 @@ function App() {
   const category = categoryId ? `category=${categoryId}` : "";
 
   React.useEffect(() => {
-    //React.setIsLoading(true);
-     fetch(
+    setIsLoading(true);
+    fetch(
       // 'https://632620f270c3fa390f94c420.mockapi.io/collections'
       `https://632620f270c3fa390f94c420.mockapi.io/collections?page=${page}&limit=3&${category}`
-     )
-       .then((res) => res.json())
-       .then((json) => {
-         setCollection(json);
-       })
-       .catch((err) => {
-         console.warn(err);
-         alert("Error in receiving data");
-       })
-       //.finally(() => React.setIsLoading(false));
-   }, [categoryId, page]);
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        setCollection(json);
+      })
+      .catch((err) => {
+        console.warn(err);
+        alert("Error in receiving data");
+      })
+      .finally(() => setIsLoading(false));
+  }, [categoryId, page]);
 
 
 
@@ -56,7 +56,8 @@ function App() {
         <input value={searchValue} onChange={e => setSearchValue(e.target.value)} className="search-input" placeholder="Search by title" />
       </div>
       <div className="content">
-        {
+        {isLoading ? <h2>Page is loading...</h2> : (
+
           collections.filter(obj => obj.name.toLowerCase().includes(searchValue.toLowerCase())
           ).map((obj, index) => (
             <Collection
@@ -65,7 +66,7 @@ function App() {
               images={obj.photos}
             />
           ))
-        }
+        )}
       </div>
       <ul className="pagination">
         <li>1</li>
