@@ -54,12 +54,15 @@ function App() {
           <li>Architecture</li>
           <li>Cities</li>
         </ul>
-        <input className="search-input" placeholder="Search by title" />
+        <input value={searchValue} onChange={e => setSearchValue(e.target.value)} className="search-input" placeholder="Search by title" />
       </div>
       <div className="content">
         {
-          collections.map((obj) => (
+          collections.filter(obj => {
+            return obj.name.toLowerCase().includes(searchValue.toLowerCase());
+          }).map((obj, index) => (
             <Collection
+              key={index}
               name={obj.name}
               images={obj.photos}
             />
