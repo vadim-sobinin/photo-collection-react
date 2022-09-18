@@ -48,19 +48,17 @@ function App() {
       <h1>My collection of photos</h1>
       <div className="top">
         <ul className="tags">
-          <li className="active">All</li>
-          <li>Mountains</li>
-          <li>Sea</li>
-          <li>Architecture</li>
-          <li>Cities</li>
+          {
+            cats.map((obj, i) => (
+              <li onClick={() => setCategoryId(i)} className={categoryId === i ? "active" : ""} key={obj.name}>{obj.name}</li>))
+          }
         </ul>
         <input value={searchValue} onChange={e => setSearchValue(e.target.value)} className="search-input" placeholder="Search by title" />
       </div>
       <div className="content">
         {
-          collections.filter(obj => {
-            return obj.name.toLowerCase().includes(searchValue.toLowerCase());
-          }).map((obj, index) => (
+          collections.filter(obj => obj.name.toLowerCase().includes(searchValue.toLowerCase())
+          ).map((obj, index) => (
             <Collection
               key={index}
               name={obj.name}
