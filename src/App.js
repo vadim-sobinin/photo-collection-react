@@ -25,8 +25,8 @@ function App() {
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
-      // 'https://632620f270c3fa390f94c420.mockapi.io/collections'
-      `https://632620f270c3fa390f94c420.mockapi.io/collections?page=${page}&limit=3&${category}`
+      // 'https://632620f270c3fa390f94c420.mockapi.io/vadim-sobinin/collections'
+      `https://632620f270c3fa390f94c420.mockapi.io/vadim-sobinin/collections?page=${page}&limit=3&${category}`
     )
       .then((res) => res.json())
       .then((json) => {
